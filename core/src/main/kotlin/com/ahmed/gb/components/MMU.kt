@@ -18,8 +18,16 @@ class MMU(val device : GameBoy)
     // interrupt flags
     val IF = mbyte(0xFF0F)
     // timer register
+    // The time counter is kept at 0xFF05.
+    // It goes from 0-255. When it exceeds 255, it is loaded with the value at 0xFF06.
+    // The timer on/off switch and the frequency is kept at 0xFF07.
     val TIMA = mbyte(0xFF05)
-    // holds
+    // you should create a variable to hold the number of cycles
+    // until the timer is updated(which is machine speed / timer frequency.
+    // example: 1048576 / 4096 = 256) and subtract the opcode's cycles from that.
+    // When it is lower than or equal to 0, increment 0xFF05.
+    // When 0xFF05 exceeds 255, load it with the contents of 0xFF06.
+    // Hope that is what you're talking about.
 
     val cpu : DMG
         get() = device.cpu
